@@ -1,65 +1,78 @@
-import Image from "next/image";
+"use client";
+
+import { HeroSection } from "@/sections/Hero/HeroSection";
+import { AboutSection } from "@/sections/About/AboutSection";
+import { SkillsSection } from "@/sections/Skills/SkillsSection";
+import { ProjectsSection } from "@/sections/Projects/ProjectsSection";
+import { ExperienceSection } from "@/sections/Experience/ExperienceSection";
+import { CertificatesSection } from "@/sections/Certificates/CertificatesSection";
+import { ContactSection } from "@/sections/Contact/ContactSection";
+import { Footer } from "@/components/layout/Footer";
+import { CyberScene } from "@/components/3d/CyberScene";
+import { useSecretMode } from "@/store/useSecretMode";
+import { AnimatePresence, motion } from "framer-motion";
 
 export default function Home() {
+  const { isSecretMode, setSecretMode } = useSecretMode();
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+    <main className="relative flex flex-col min-h-screen bg-transparent">
+      {/* Global 3D Background - Always Rendered */}
+      <CyberScene />
+
+      {/* Secret Mode Return Button */}
+      <AnimatePresence>
+        {isSecretMode && (
+          <motion.div
+            initial={{ opacity: 0, y: -50 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -50 }}
+            transition={{ duration: 0.5 }}
+            className="fixed top-10 left-1/2 -translate-x-1/2 z-[100]"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            <button
+              onClick={() => setSecretMode(false)}
+              className="px-8 py-3 rounded-full bg-white/10 backdrop-blur-md border border-cyber-cyan text-cyber-cyan font-sans tracking-widest uppercase hover:bg-cyber-cyan hover:text-black transition-colors shadow-[0_0_20px_rgba(0,240,255,0.3)]"
+            >
+              Kembali ke Realitas
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Normal Website Content */}
+      <AnimatePresence>
+        {!isSecretMode && (
+          <motion.div
+            key="normal-content"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.95, filter: "blur(10px)" }}
+            transition={{ duration: 0.8, ease: "easeInOut" }}
+            className="w-full flex flex-col z-10"
           >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+            <HeroSection />
+            <AboutSection />
+            <SkillsSection />
+            <ProjectsSection />
+            <ExperienceSection />
+            <CertificatesSection />
+            <ContactSection />
+            
+            {/* Hidden Button above Footer */}
+            <div className="w-full flex justify-center py-12 relative z-20">
+              <button 
+                onClick={() => setSecretMode(true)}
+                className="opacity-20 hover:opacity-100 px-6 py-2 text-xs font-sans tracking-widest text-cyber-cyan border border-cyber-cyan/30 rounded-full transition-all duration-500 hover:shadow-[0_0_20px_rgba(0,240,255,0.5)]"
+              >
+                [ INIT_SECRET_PROTOCOL ]
+              </button>
+            </div>
+
+            <Footer />
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </main>
   );
 }
