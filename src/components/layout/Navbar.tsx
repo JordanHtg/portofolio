@@ -61,9 +61,14 @@ export function Navbar() {
 
               {/* Resume CTA */}
               <div className="hidden md:block">
-                <button className="interactive px-6 py-2 border border-cyber-cyan text-cyber-cyan text-sm font-bold uppercase tracking-wider rounded-full hover:bg-cyber-cyan hover:text-black transition-colors">
-                  Resume
-                </button>
+                <a 
+                  href="https://card-ar-ruby.vercel.app" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="interactive inline-block px-6 py-2 border border-cyber-cyan text-cyber-cyan text-sm font-bold uppercase tracking-wider rounded-full hover:bg-cyber-cyan hover:text-black transition-colors"
+                >
+                  Travel to AR-Card
+                </a>
               </div>
 
               {/* Mobile Menu Toggle */}
