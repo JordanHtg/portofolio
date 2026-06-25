@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useSecretMode } from "@/store/useSecretMode";
+import { Menu, X } from "lucide-react";
 
 const navLinks = [
   { name: "About", href: "#about" },
@@ -14,6 +15,7 @@ const navLinks = [
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -73,11 +75,52 @@ export function Navbar() {
 
               {/* Mobile Menu Toggle */}
               <div className="md:hidden">
-                <button className="text-white hover:text-cyber-cyan">
-                  ☰
+                <button 
+                  onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                  className="text-white hover:text-cyber-cyan p-2 transition-colors"
+                  aria-label="Toggle menu"
+                >
+                  {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
                 </button>
               </div>
             </div>
+
+            {/* Mobile Menu Dropdown */}
+            <AnimatePresence>
+              {isMobileMenuOpen && (
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: "auto" }}
+                  exit={{ opacity: 0, height: 0 }}
+                  className="md:hidden mt-4 bg-black/90 backdrop-blur-xl rounded-2xl border border-white/10 overflow-hidden"
+                >
+                  <nav className="flex flex-col p-6 gap-4">
+                    {navLinks.map((link) => (
+                      <a
+                        key={link.name}
+                        href={link.href}
+                        onClick={() => setIsMobileMenuOpen(false)}
+                        className="text-base font-sans font-medium text-gray-300 hover:text-cyber-cyan transition-colors"
+                      >
+                        {link.name}
+                      </a>
+                    ))}
+                    <div className="mt-4 pt-4 border-t border-white/10">
+                      <a 
+                        href="https://card-ar-ruby.vercel.app" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        onClick={() => setIsMobileMenuOpen(false)}
+                        className="inline-block w-full text-center px-6 py-3 border border-cyber-cyan text-cyber-cyan text-sm font-bold uppercase tracking-wider rounded-full hover:bg-cyber-cyan hover:text-black transition-colors"
+                      >
+                        Travel to AR-Card
+                      </a>
+                    </div>
+                  </nav>
+                </motion.div>
+              )}
+            </AnimatePresence>
+
           </div>
         </motion.header>
       )}
