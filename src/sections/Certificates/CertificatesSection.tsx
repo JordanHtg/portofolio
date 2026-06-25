@@ -82,7 +82,8 @@ export function CertificatesSection() {
               >
                 <button 
                   onClick={() => setSelectedCert(null)}
-                  className="absolute top-4 right-4 z-10 p-2 rounded-full bg-black/50 text-white hover:text-cyber-cyan hover:bg-white/10 transition-colors"
+                  className="absolute top-2 right-2 md:top-4 md:right-4 z-50 p-3 rounded-full bg-black/50 text-white hover:text-cyber-cyan hover:bg-white/10 transition-colors"
+                  aria-label="Close modal"
                 >
                   <X className="w-6 h-6" />
                 </button>
