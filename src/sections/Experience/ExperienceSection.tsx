@@ -17,10 +17,10 @@ const experiences = [
     description: "Membangun antarmuka web responsif dan animasi berkinerja tinggi menggunakan React dan Framer Motion. Mengintegrasikan RESTful API dengan arsitektur headless CMS.",
   },
   {
-    role: "Ketua Divisi R&D",
-    company: "Himpunan Mahasiswa Ilmu Komputer",
+    role: "IT Assistant",
+    company: "BRI Jalan Rajawali",
     duration: "Mar 2024 - Jun 2025",
-    description: "Memimpin tim beranggotakan 10 orang dalam eksplorasi teknologi baru (Web3, IoT Security). Mengadakan workshop tentang keamanan aplikasi web bagi 100+ peserta.",
+    description: "Menjadi IT Assistant yang membantu dalam operasi website dan input data kartu ke website.",
   },
 ];
 
